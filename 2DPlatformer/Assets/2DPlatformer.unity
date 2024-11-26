@@ -232,7 +232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &384719765
 Transform:
   m_ObjectHideFlags: 0
@@ -422,9 +422,9 @@ GameObject:
   - component: {fileID: 520991751}
   - component: {fileID: 520991750}
   - component: {fileID: 520991752}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1231,9 +1231,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1461732683}
   - component: {fileID: 1461732684}
-  - component: {fileID: 1461732687}
   - component: {fileID: 1461732686}
-  m_Layer: 3
+  - component: {fileID: 1461732688}
+  - component: {fileID: 1461732689}
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1296,10 +1297,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8279801f95b8f9f4e95f0d53c0e46f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1461732688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461732682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b0f5ef499b7d3449b66dde8584fa8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _speed: 3
   _jumpForce: 5
---- !u!61 &1461732687
-BoxCollider2D:
+  _mask:
+    serializedVersion: 2
+    m_Bits: 8
+  _groundCheckRadius: 0.7
+--- !u!70 &1461732689
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1333,17 +1350,8 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   m_Size: {x: 1, y: 0.5}
-  m_EdgeRadius: 0
+  m_Direction: 1
 --- !u!1 &1706717998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,7 +1368,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1706717999
 Transform:
   m_ObjectHideFlags: 0
