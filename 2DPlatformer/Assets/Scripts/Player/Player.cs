@@ -9,8 +9,6 @@ public class Player : MonoBehaviour
         [SerializeField] private float _jumpForce = 5f;
         private bool _doubleJump;
         private bool _isFalling;
-        private int _maxPlayerLives = 3;
-        private int _currentPlayerLives;
         
         private float _groundCheckRadius = 0.2f;
         
@@ -18,6 +16,8 @@ public class Player : MonoBehaviour
         private SpriteRenderer _sprite;
         private Rigidbody2D _rb2D;
         [SerializeField] private LayerMask _mask;
+        
+        [SerializeField] private UIManager heartManager;
                 
         public static Player Instance;
         private void Awake()
@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
 
         private void Start()
         {
-            _currentPlayerLives = _maxPlayerLives;
             _rb2D = GetComponent<Rigidbody2D>();
             _sprite = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
@@ -95,18 +94,5 @@ public class Player : MonoBehaviour
             {
                 _isFalling = true;
             }
-        }
-        public void TakeDamage(int damage)
-        {
-            _currentPlayerLives -= damage;
-            if(_currentPlayerLives <= 0)
-            {
-                Die();
-            }
-        }
-
-        void Die()
-        {
-            Debug.Log("Game Over");
         }
     }
