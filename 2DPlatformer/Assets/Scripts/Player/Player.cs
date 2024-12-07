@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
         [SerializeField] private float _jumpForce = 5f;
         private bool _doubleJump;
         private bool _isFalling;
+        private int _maxPlayerLives = 3;
+        private int _currentPlayerLives;
         
         private float _groundCheckRadius = 0.2f;
         
@@ -16,19 +18,8 @@ public class Player : MonoBehaviour
         private SpriteRenderer _sprite;
         private Rigidbody2D _rb2D;
         [SerializeField] private LayerMask _mask;
-        
+                
         public static Player Instance;
-
-        private void OnEnable()
-        {
-            CoinTrigger.OnCoinTriggered += CoinCounter;
-        }
-
-        private void CoinCounter(bool isCoin)
-        {
-            Debug.Log(isCoin);
-        }
-
         private void Awake()
         {
             Instance = this;
@@ -36,6 +27,7 @@ public class Player : MonoBehaviour
 
         private void Start()
         {
+            _currentPlayerLives = _maxPlayerLives;
             _rb2D = GetComponent<Rigidbody2D>();
             _sprite = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
@@ -74,7 +66,7 @@ public class Player : MonoBehaviour
         public bool IsGrounded()
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, _groundCheckRadius, _mask);
-            if (hit.collider != null)
+            if (hit.collider != null) 
             {
                 _isFalling = false;
                 return true;
@@ -95,11 +87,6 @@ public class Player : MonoBehaviour
                     _rb2D.linearVelocity = new Vector2(_rb2D.linearVelocity.x, _jumpForce);
                     _doubleJump = false;
             }
-
-            if (_rb2D.linearVelocity.y == 0)
-            {
-                _animator.ResetTrigger("Jump");
-            }
         }
         private void VerticalSpeed()
         {
@@ -109,10 +96,17 @@ public class Player : MonoBehaviour
                 _isFalling = true;
             }
         }
-        
-        private void OnDisable()
+        public void TakeDamage(int damage)
         {
-            CoinTrigger.OnCoinTriggered -= CoinCounter;
+            _currentPlayerLives -= damage;
+            if(_currentPlayerLives <= 0)
+            {
+                Die();
+            }
         }
-        
+
+        void Die()
+        {
+            Debug.Log("Game Over");
+        }
     }

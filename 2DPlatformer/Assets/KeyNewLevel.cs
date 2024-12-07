@@ -1,16 +1,14 @@
 using System;
 using UnityEngine;
 
-public class CoinTrigger : MonoBehaviour
+public class KeyNewLevel : MonoBehaviour
 {
-    public static Action<bool> OnCoinTriggered;
-    public BonusManager coinCounter;
+    public static Action OnDoorOpen;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            coinCounter.AddCoin();
-            OnCoinTriggered?.Invoke(true);
+            OnDoorOpen?.Invoke();
             gameObject.SetActive(false);
         }
     }
