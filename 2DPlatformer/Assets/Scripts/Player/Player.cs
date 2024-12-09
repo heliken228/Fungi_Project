@@ -34,65 +34,13 @@ public class Player : MonoBehaviour
 
         private void Update()
         {
+            if (_rb2D.linearVelocity.y < 0 && !IsGrounded()) 
+            {
+                _animator.SetBool("IsFall", true);
+            }
+            else
+            {
+                _animator.SetBool("IsFall", false);
+            }
             if (IsGrounded())
-            {
-                _doubleJump = true;
-            }
-            VerticalSpeed();
-        }
-
-        private void OnDrawGizmos()
-        {
-            Debug.DrawRay(transform.position, Vector2.down * _groundCheckRadius, Color.blue);
-        }
-
-        internal void Move(float value)
-        {
-            _rb2D.linearVelocity = new Vector2(value * _speed, _rb2D.linearVelocityY);
-            _animator.SetBool("IsRun", Mathf.Abs(_rb2D.linearVelocity.x) >= 0.01f);
-            
-            //_sprite.flipX = value < 0 ? true : false;
-           if (value > 0)
-            {
-                _sprite.flipX = false;
-            }
-            else if (value < 0)
-            {
-                _sprite.flipX = true;
-            }
-        }
-        
-        public bool IsGrounded()
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, _groundCheckRadius, _mask);
-            if (hit.collider != null) 
-            {
-                _isFalling = false;
-                return true;
-            }
-            return false;
-
-        }
-
-        internal void Jump()
-        {
-            if (IsGrounded())
-            {
-                    _animator.SetTrigger("Jump");
-                    _rb2D.linearVelocity = new Vector2(_rb2D.linearVelocity.x, _jumpForce);
-            }
-            else if (_doubleJump)
-            {
-                    _rb2D.linearVelocity = new Vector2(_rb2D.linearVelocity.x, _jumpForce);
-                    _doubleJump = false;
-            }
-        }
-        private void VerticalSpeed()
-        {
-            _animator.SetBool("IsFall", _isFalling);
-            if (_rb2D.linearVelocity.y < 0)
-            {
-                _isFalling = true;
-            }
-        }
-    }
+            { 
