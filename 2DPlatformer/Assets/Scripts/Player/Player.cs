@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
     {
@@ -10,7 +11,7 @@ public class Player : MonoBehaviour
         private bool _doubleJump;
         private bool _isFalling;
         
-        private float _groundCheckRadius = 0.2f;
+        private float _groundCheckRadius = 0.7f;
         
         private Animator _animator;
         private SpriteRenderer _sprite;
@@ -28,8 +29,8 @@ public class Player : MonoBehaviour
         private void Start()
         {
             _rb2D = GetComponent<Rigidbody2D>();
-            _sprite = GetComponent<SpriteRenderer>();
-            _animator = GetComponent<Animator>();
+            _sprite = GetComponentInChildren<SpriteRenderer>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
         private void Update()
@@ -51,7 +52,6 @@ public class Player : MonoBehaviour
             _rb2D.linearVelocity = new Vector2(value * _speed, _rb2D.linearVelocityY);
             _animator.SetBool("IsRun", Mathf.Abs(_rb2D.linearVelocity.x) >= 0.01f);
             
-            //_sprite.flipX = value < 0 ? true : false;
            if (value > 0)
             {
                 _sprite.flipX = false;
@@ -94,5 +94,36 @@ public class Player : MonoBehaviour
             {
                 _isFalling = true;
             }
+        }
+
+        internal void Attack()
+        {
+            int randomAttack = Random.Range(0, 4);  
+            switch (randomAttack)
+            {
+                case 1:
+                    _animator.SetTrigger("Attack1");
+                    break;
+                case 2:
+                    _animator.SetTrigger("Attack2");
+                    break;
+                case 3:
+                    _animator.SetTrigger("Attack3");
+                    break;
+            }
+        }
+        internal void StartBlock()
+        {
+            _animator.SetBool("Block", true);
+        }
+        internal void StopBlock()
+        {
+            _animator.SetBool("Block", false);
+        }
+
+        internal void Death()
+        {
+            _animator.SetTrigger("Death");
+            Debug.Log("DEATH");
         }
     }

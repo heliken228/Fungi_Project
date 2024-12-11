@@ -12,5 +12,17 @@ using UnityEngine;
             {
                 Player.Instance.Jump();
             }
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Player.Instance.Attack();
+            }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                Player.Instance.StartBlock();
+            }
+            if (Input.GetKeyUp(KeyCode.H))
+            {
+                Player.Instance.StopBlock();
+            }
         }
     }

@@ -6,8 +6,8 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private  TextMeshProUGUI coinCounterText;
     private int _coinCount = 0;
-    [SerializeField] private Animator[] hearts;                // Массив аниматоров сердец
-    private int _currentHeartIndex = 0;                         // Индекс текущего сердца
+    [SerializeField] private Animator[] hearts;
+    private int _currentHeartIndex = 0;
 
     private void Start()
     {
@@ -42,6 +42,10 @@ public class UIManager : MonoBehaviour
             hearts[_currentHeartIndex].SetBool("IsRed", false);
             hearts[_currentHeartIndex].SetBool("IsGray", true);
             _currentHeartIndex++;
+            if (_currentHeartIndex >= hearts.Length)
+            {
+                Player.Instance.Death();
+            }
         }
     }
     private void OnDisable()
