@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
         [SerializeField] private UIManager heartManager;
                 
         public static Player Instance;
+
+        private AudioSource _audioSourceAttack;
+        
         private void Awake()
         {
             Instance = this;
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour
 
         private void Start()
         {
+            _audioSourceAttack = GetComponentInChildren<AudioSource>();
             _rb2D = GetComponent<Rigidbody2D>();
             _sprite = GetComponentInChildren<SpriteRenderer>();
             _animator = GetComponentInChildren<Animator>();
@@ -103,12 +107,15 @@ public class Player : MonoBehaviour
             {
                 case 1:
                     _animator.SetTrigger("Attack1");
+                    _audioSourceAttack.Play();
                     break;
                 case 2:
                     _animator.SetTrigger("Attack2");
+                    _audioSourceAttack.Play();
                     break;
                 case 3:
                     _animator.SetTrigger("Attack3");
+                    _audioSourceAttack.Play();
                     break;
             }
         }

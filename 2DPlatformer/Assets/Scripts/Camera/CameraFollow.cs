@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // игрок, за которым следует камера
-    public float smoothSpeed = 0.125f; // плавность следования
+    public Transform target;
+    public float smoothSpeed = 0.125f;
 
-    private Vector3 offset; // отступ между камерой и игроком
+    private Vector3 offset;
 
     void Start()
     {
@@ -16,8 +16,6 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 desiredPosition = target.position + offset;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = smoothedPosition;
-
-        transform.LookAt(target);
+        transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, -10f);
     }
 }
