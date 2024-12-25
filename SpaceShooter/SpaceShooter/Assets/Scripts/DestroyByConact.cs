@@ -8,7 +8,7 @@ public class DestroyByConact : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (_explosion != null && other.CompareTag("Bolt")) 
+        if (_explosion != null && other.CompareTag("Bolt"))
         {
             Instantiate(_explosion, transform.position, transform.rotation);
             Destroy(gameObject);
@@ -24,7 +24,7 @@ public class DestroyByConact : MonoBehaviour
             return;
         }
         
-        if (other.CompareTag("Boundary"))
+       /* if (other.CompareTag("Boundary"))
         {
             return;
         }
@@ -32,6 +32,6 @@ public class DestroyByConact : MonoBehaviour
         if (other.CompareTag("EnemyBolt") && CompareTag("Enemy"))
         {
             return;
-        }
+        }*/
     }
 }
