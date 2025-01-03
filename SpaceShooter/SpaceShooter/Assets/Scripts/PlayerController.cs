@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+
 
 [System.Serializable]
 public class Boundary
@@ -9,6 +9,8 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private PoolObject _poolObject;
+    
     private Rigidbody _rigidbody;
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float _tiltAngle = 5.0f;
@@ -26,12 +28,22 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire) // Time.time - сколько времени прошло с начала игры в секундах
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
-            _nextFire = Time.time + _fireRate;
-            Instantiate(_shotPrefab, _shotSpawn.position, _shotSpawn.rotation); //спавн болта
+            Shoot();
         }
     }
+
+    private void Shoot()
+    {
+        _nextFire = Time.time + _fireRate;
+
+        GameObject bullet = _poolObject.GetBullet();
+        bullet.transform.position = _shotSpawn.position;
+        bullet.transform.rotation = _shotSpawn.rotation;
+        bullet.SetActive(true);
+    }
+
 
     private void FixedUpdate()
     {

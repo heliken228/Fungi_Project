@@ -4,10 +4,8 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
-
 public class Enemy : MonoBehaviour
 {
-   [SerializeField] private float _tiltAngle;
    [SerializeField] private float _smoothing;
    [SerializeField] private float _dodge;
    
@@ -31,15 +29,14 @@ public class Enemy : MonoBehaviour
 
    private void FixedUpdate()
    {
-      float newManeuver = Mathf.MoveTowards(_rigidbody.linearVelocity.x, _maneuverTarget, Time.deltaTime * _smoothing);  //новый манёвр - перемещение к таргету
-      _rigidbody.linearVelocity = new Vector3(newManeuver, 0, _currentSpeed);
+      float newManeuver = Mathf.MoveTowards(_rigidbody.linearVelocity.x, _maneuverTarget, Time.fixedDeltaTime * _smoothing);  //новый манёвр - перемещение к таргету
+      _rigidbody.linearVelocity = new Vector3(newManeuver, _currentSpeed, 0);  // скорость
       _rigidbody.position = new Vector3
       (
          Mathf.Clamp(_rigidbody.position.x, _boundary.xMin, _boundary.xMax),
          Mathf.Clamp(_rigidbody.position.y, _boundary.yMin, _boundary.yMax),
          0.0f
       );
-      _rigidbody.rotation = Quaternion.Euler(-90.0f, 0.0f, _rigidbody.linearVelocity.x * -_tiltAngle);
    }
 
    IEnumerator Evade()
@@ -53,7 +50,4 @@ public class Enemy : MonoBehaviour
          yield return new WaitForSeconds(Random.Range(_maneuverWait.x, _maneuverWait.y));
       }
    }
-   
-   
-   
 }
